@@ -1,29 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProyectoFinal.Clases
+﻿namespace ProyectoFinal.Clases
 {
     public class Grafo
     {
-        const int numUbica = 20;
-        private int[,] matriz = new int[numUbica, numUbica];
+        private int[,] matriz;
+        private const int nodos = 15;
 
-        private int nodos;
         private Dictionary<char, int> mapaIndices = new Dictionary<char, int> { {'a', 0}, {'b', 1}, {'c', 2}, {'e', 3} };
         private Dictionary<int, char> mapaLetras = new Dictionary<int, char> { {0, 'a'}, {1, 'b'}, {2, 'c'}, {3, 'e'} };
 
         public Grafo()
         {
-            nodos = 4;
-            matriz = new int[4, 4] {
-            {0, 3, 2, 6}, // a
-            {0, 0, 0, 9}, // b
-            {0, 0, 0, 9}, // c
-            {0, 0, 0, 0}  // e
-        };
+            matriz = new int[nodos, nodos]
+            {
+                // A   B   C   D   E   F   G   H   I   J   K   L   M   N   O
+                { 0,  4,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0 }, // A
+                { 0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // B
+                { 0,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // C
+                { 0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // D
+                { 0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // E
+                { 0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0 }, // F
+                { 0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0 }, // G
+                { 0,  0,  0,  0,  0,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0 }, // H
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0 }, // I
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0 }, // J
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0 }, // K
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0 }, // L
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  3,  0 }, // M
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4 }, // N
+                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // O
+            };
         }
 
         public void Dijkstra(char inicio, char fin)
