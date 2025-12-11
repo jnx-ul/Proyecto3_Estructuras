@@ -138,9 +138,8 @@
             lblNomAlgoritmo.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblNomAlgoritmo.Location = new Point(20, 311);
             lblNomAlgoritmo.Name = "lblNomAlgoritmo";
-            lblNomAlgoritmo.Size = new Size(41, 17);
+            lblNomAlgoritmo.Size = new Size(0, 17);
             lblNomAlgoritmo.TabIndex = 10;
-            lblNomAlgoritmo.Text = "label1";
             // 
             // lblDistancia
             // 
@@ -148,9 +147,8 @@
             lblDistancia.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDistancia.Location = new Point(20, 339);
             lblDistancia.Name = "lblDistancia";
-            lblDistancia.Size = new Size(43, 17);
+            lblDistancia.Size = new Size(0, 17);
             lblDistancia.TabIndex = 11;
-            lblDistancia.Text = "label1";
             // 
             // lblRutasPosibles
             // 
@@ -158,9 +156,8 @@
             lblRutasPosibles.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRutasPosibles.Location = new Point(20, 373);
             lblRutasPosibles.Name = "lblRutasPosibles";
-            lblRutasPosibles.Size = new Size(43, 17);
+            lblRutasPosibles.Size = new Size(0, 17);
             lblRutasPosibles.TabIndex = 12;
-            lblRutasPosibles.Text = "label1";
             // 
             // lblDirecciones
             // 
@@ -168,9 +165,8 @@
             lblDirecciones.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDirecciones.Location = new Point(20, 390);
             lblDirecciones.Name = "lblDirecciones";
-            lblDirecciones.Size = new Size(43, 17);
+            lblDirecciones.Size = new Size(0, 17);
             lblDirecciones.TabIndex = 13;
-            lblDirecciones.Text = "label1";
             // 
             // lblTiempo
             // 
@@ -178,9 +174,8 @@
             lblTiempo.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTiempo.Location = new Point(20, 356);
             lblTiempo.Name = "lblTiempo";
-            lblTiempo.Size = new Size(43, 17);
+            lblTiempo.Size = new Size(0, 17);
             lblTiempo.TabIndex = 14;
-            lblTiempo.Text = "label1";
             // 
             // Mapa
             // 

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Git\\UH\\Proyecto3_Estructuras\\ProyectoFinal\\ProyectoFinal.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Git\\UH\\Estructuras\\Proyecto3_Estructuras\\ProyectoFinal\\ProyectoFinal.csproj",
       "projectName": "ProyectoFinal",
-      "projectPath": "C:\\Users\\Usuario\\Desktop\\Git\\UH\\Proyecto3_Estructuras\\ProyectoFinal\\ProyectoFinal.csproj",
+      "projectPath": "C:\\Users\\Usuario\\Desktop\\Git\\UH\\Estructuras\\Proyecto3_Estructuras\\ProyectoFinal\\ProyectoFinal.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Desktop\\Git\\UH\\Proyecto3_Estructuras\\ProyectoFinal\\obj\\",
+      "outputPath": "C:\\Users\\Usuario\\Desktop\\Git\\UH\\Estructuras\\Proyecto3_Estructuras\\ProyectoFinal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
