@@ -1,196 +1,341 @@
-﻿namespace ProyectoFinal.Clases
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProyectoFinal.Clases
 {
     public class Grafo
     {
+        public const int INF = int.MaxValue / 4; //Constante utilizada para inicializar el grafo 
+        public string[] Lugares;
+        public Dictionary<string, int> mapaIndices;
+        public Dictionary<int, string> mapaNombres;
         private int[,] matriz;
-        private const int nodos = 15;
 
-        private Dictionary<char, int> mapaIndices = new Dictionary<char, int> { {'a', 0}, {'b', 1}, {'c', 2}, {'e', 3} };
-        private Dictionary<int, char> mapaLetras = new Dictionary<int, char> { {0, 'a'}, {1, 'b'}, {2, 'c'}, {3, 'e'} };
-
+        /// <summary>
+        /// Constructor de la clase
+        /// </summary>
         public Grafo()
         {
-            matriz = new int[nodos, nodos]
-            {
-                // A   B   C   D   E   F   G   H   I   J   K   L   M   N   O
-                { 0,  4,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0 }, // A
-                { 0,  0,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // B
-                { 0,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // C
-                { 0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // D
-                { 0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // E
-                { 0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0 }, // F
-                { 0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0 }, // G
-                { 0,  0,  0,  0,  0,  0,  0,  0,  3,  0,  0,  0,  0,  0,  0 }, // H
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0 }, // I
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0 }, // J
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0 }, // K
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0 }, // L
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  3,  0 }, // M
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4 }, // N
-                { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0 }, // O
-            };
+            InicializarLugares();
+            InicializarMatriz();
+            InicializarCalles();
         }
 
-        public void Dijkstra(char inicio, char fin)
+        #region Métodos privados
+
+        /// <summary>
+        /// Llena array con lugares, alamcena información de lugares e indices en diccionarios.
+        /// </summary>
+        private void InicializarLugares()
         {
-            int origen = mapaIndices[inicio];
-            int destino = mapaIndices[fin];
-
-            int[] dist = new int[nodos];
-            bool[] visitado = new bool[nodos];
-            int[] previo = new int[nodos];
-
-            for (int i = 0; i < nodos; i++)
+            //Llena array de lugares
+            Lugares = new[]
             {
-                dist[i] = int.MaxValue;
+                "Familia Saucedo",             // 0
+                "Multiplaza Escazú",           // 1
+                "Familia Urbina",              // 2
+                "Universidad Hispanoamericana",// 3
+                "Parque Norte",                // 4
+                "Hospital Clínica Bíblica",    // 5
+                "Iglesia de la Soledad",       // 6
+                "Familia Oviedo",              // 7
+                "Multiplaza Curridabat",       // 8
+                "Familia Durán",               // 9
+                "Hospital la Catolica",        // 10
+                "El Chino",                    // 11
+                "Familia Curling",             // 12
+                "Parque Central",              // 13
+                "Universidad de Costa Rica",   // 14
+                "Parque Oeste",                // 15
+                "Familia Arazi",               // 16
+                "Familia Cambronero",          // 17
+                "Familia López",               // 18
+                "Parque Sur"                   // 19
+            };
+
+            //Inicializa los diccionarios vacíos
+            mapaIndices = new Dictionary<string, int>();
+            mapaNombres = new Dictionary<int, string>();
+
+            //Recorre el arreglo de lugares y llena los diccionarios.
+            for (int i = 0; i < Lugares.Length; i++)
+            {
+                mapaIndices[Lugares[i]] = i;
+                mapaNombres[i] = Lugares[i];
+            }
+        }
+
+        /// <summary>
+        /// Inicializa la matriz
+        /// </summary>
+        private void InicializarMatriz()
+        {
+            int tamanio = Lugares.Length;
+            matriz = new int[tamanio, tamanio];
+
+            for (int i = 0; i < tamanio; i++)
+            {
+                for (int j = 0; j < tamanio; j++)
+                {
+                    matriz[i, j] = (i == j) ? 0 : INF;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Asigna el peso 
+        /// </summary>
+        /// <param name="origen"></param>
+        /// <param name="destino"></param>
+        /// <param name="peso"></param>
+        private void AgregarConexion(string origen, string destino, int peso)
+        {
+            int i = mapaIndices[origen];
+            int j = mapaIndices[destino];
+            matriz[i, j] = peso;
+            matriz[j, i] = peso; // grafo no dirigido
+        }
+
+        /// <summary>
+        /// Define las calles entre los lugares (puedes ajustar según tu mapa real).
+        /// </summary>
+        private void InicializarCalles()
+        {
+            AgregarConexion("Familia Saucedo", "Multiplaza Escazú", 3);
+            AgregarConexion("Familia Saucedo", "Familia Urbina", 3);
+
+            AgregarConexion("Multiplaza Escazú", "Familia Urbina", 3);
+            AgregarConexion("Multiplaza Escazú", "Universidad Hispanoamericana", 3);
+
+            AgregarConexion("Familia Urbina", "Universidad de Costa Rica", 4);
+
+            AgregarConexion("Universidad Hispanoamericana", "Parque Norte", 7);
+            AgregarConexion("Universidad Hispanoamericana", "Iglesia de la Soledad", 5);
+
+            AgregarConexion("Parque Norte", "Hospital Clínica Bíblica", 5);
+            AgregarConexion("Parque Norte", "Iglesia de la Soledad", 2);
+
+            AgregarConexion("Iglesia de la Soledad", "Parque Central", 6);
+            AgregarConexion("Iglesia de la Soledad", "Hospital Clínica Bíblica", 10);
+
+            AgregarConexion("Hospital Clínica Bíblica", "Familia Oviedo", 3);
+
+            AgregarConexion("Familia Oviedo", "Multiplaza Curridabat", 4);
+            AgregarConexion("Familia Oviedo", "Iglesia de la Soledad", 6);
+
+            AgregarConexion("Multiplaza Curridabat", "El Chino", 3);
+
+            AgregarConexion("El Chino", "Familia Curling", 7);
+            AgregarConexion("El Chino", "Familia Durán", 4);
+
+            AgregarConexion("Familia Durán", "Hospital la Catolica", 5);
+
+            AgregarConexion("Hospital la Catolica", "Parque Sur", 8);
+            AgregarConexion("Hospital la Catolica", "El Chino", 3);
+
+            AgregarConexion("Parque Central", "El Chino", 6);
+            AgregarConexion("Parque Central", "Universidad Hispanoamericana", 4);
+
+            AgregarConexion("Parque Sur", "Familia López", 9);
+            AgregarConexion("Parque Sur", "Familia Cambronero", 10);
+
+            AgregarConexion("Familia López", "Familia Arazi", 6);
+
+            AgregarConexion("Familia Cambronero", "Familia Curling", 5);
+            AgregarConexion("Familia Cambronero", "Familia Arazi", 6);
+
+            AgregarConexion("Familia Arazi", "Parque Oeste", 4);
+
+            AgregarConexion("Parque Oeste", "Universidad de Costa Rica", 7);
+            AgregarConexion("Parque Oeste", "Familia Saucedo", 6);
+
+            AgregarConexion("Universidad de Costa Rica", "Parque Central", 2);
+            AgregarConexion("Universidad de Costa Rica", "Familia Curling", 4);
+        }
+
+        #endregion
+
+        #region Métodos públicos
+        /// <summary>
+        /// Devuelve el nombre del camino según el indice
+        /// </summary>
+        /// <param name="camino"></param>
+        /// <returns></returns>
+        public List<string> ConvertirCaminoANombres(List<int> camino)
+        {
+            List<string> nombres = new List<string>();
+            foreach (int indice in camino)
+            {
+                nombres.Add(mapaNombres[indice]);
+            }
+            return nombres;
+        }
+        
+        /// <summary>
+        /// Algoritmo Dijkstra muestra la ruta más corta
+        /// </summary>
+        /// <param name="origen"></param>
+        /// <param name="destino"></param>
+        /// <returns></returns>
+        public (int distancia, List<int> camino) Dijkstra(int origen, int destino)
+        {
+            int n = Lugares.Length;
+            int[] dist = new int[n];
+            bool[] visitado = new bool[n];
+            int[] previo = new int[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                dist[i] = INF;
                 visitado[i] = false;
                 previo[i] = -1;
             }
 
             dist[origen] = 0;
 
-            for (int count = 0; count < nodos - 1; count++)
+            for (int k = 0; k < n - 1; k++)
             {
-                int u = MinDistancia(dist, visitado);
-                if (u == -1) break;
-                visitado[u] = true;
+                int u = -1;
+                int minDist = INF;
 
-                for (int v = 0; v < nodos; v++)
+                for (int i = 0; i < n; i++)
                 {
-                    if (!visitado[v] && matriz[u, v] > 0 &&
-                        dist[u] != int.MaxValue &&
-                        dist[u] + matriz[u, v] < dist[v])
+                    if (!visitado[i] && dist[i] < minDist)
                     {
-                        dist[v] = dist[u] + matriz[u, v];
-                        previo[v] = u;
+                        minDist = dist[i];
+                        u = i;
                     }
                 }
-            }
 
-            Console.WriteLine("\n[Dijkstra] Ruta más corta de {0} a {1}: {2}", inicio, fin, dist[destino]);
-            MostrarRuta(previo, destino);
-        }
+                if (u == -1 || dist[u] == INF)
+                    break;
 
-        private int MinDistancia(int[] dist, bool[] visitado)
-        {
-            int min = int.MaxValue, min_index = -1;
-            for (int v = 0; v < nodos; v++)
-            {
-                if (!visitado[v] && dist[v] <= min)
+                visitado[u] = true;
+
+                for (int v = 0; v < n; v++)
                 {
-                    min = dist[v];
-                    min_index = v;
-                }
-            }
-            return min_index;
-        }
-
-        private void MostrarRuta(int[] previo, int destino)
-        {
-            if (previo[destino] == -1)
-            {
-                Console.WriteLine("No hay ruta.");
-                return;
-            }
-
-            Stack<int> ruta = new Stack<int>();
-            int actual = destino;
-            while (actual != -1)
-            {
-                ruta.Push(actual);
-                actual = previo[actual];
-            }
-
-            Console.Write("Ruta: ");
-            while (ruta.Count > 0)
-            {
-                Console.Write(mapaLetras[ruta.Pop()] + " ");
-            }
-            Console.WriteLine();
-        }
-
-        public void Floyd()
-        {
-            int[,] dist = new int[nodos, nodos];
-            int[,] next = new int[nodos, nodos];
-
-            for (int i = 0; i < nodos; i++)
-            {
-                for (int j = 0; j < nodos; j++)
-                {
-                    dist[i, j] = matriz[i, j] > 0 ? matriz[i, j] : (i == j ? 0 : int.MaxValue);
-                    next[i, j] = matriz[i, j] > 0 ? j : -1;
-                }
-            }
-
-            for (int k = 0; k < nodos; k++)
-            {
-                for (int i = 0; i < nodos; i++)
-                {
-                    for (int j = 0; j < nodos; j++)
+                    if (!visitado[v] && matriz[u, v] < INF)
                     {
-                        if (dist[i, k] != int.MaxValue && dist[k, j] != int.MaxValue &&
-                            dist[i, k] + dist[k, j] < dist[i, j])
+                        int nuevaDist = dist[u] + matriz[u, v];
+                        if (nuevaDist < dist[v])
                         {
-                            dist[i, j] = dist[i, k] + dist[k, j];
-                            next[i, j] = next[i, k];
+                            dist[v] = nuevaDist;
+                            previo[v] = u;
                         }
                     }
                 }
             }
 
-            Console.WriteLine("\n[Floyd] Todas las rutas más cortas:");
-            for (int i = 0; i < nodos; i++)
+            if (dist[destino] == INF)
             {
-                for (int j = 0; j < nodos; j++)
+                return (INF, null);
+            }
+
+            // Reconstruir camino
+            List<int> camino = new List<int>();
+            int actual = destino;
+            while (actual != -1)
+            {
+                camino.Add(actual);
+                actual = previo[actual];
+            }
+            camino.Reverse();
+
+            return (dist[destino], camino);
+        }
+
+        /// <summary>
+        /// Muestra todas las rutas posibles
+        /// </summary>
+        /// <param name="dist"></param>
+        /// <param name="next"></param>
+        public void Floyd(out int[,] dist, out int[,] next)
+        {
+            int n = Lugares.Length;
+            dist = new int[n, n];
+            next = new int[n, n];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
                 {
-                    if (i != j && dist[i, j] != int.MaxValue)
+                    dist[i, j] = matriz[i, j];
+                    if (i != j && matriz[i, j] < INF)
+                        next[i, j] = j;
+                    else
+                        next[i, j] = -1;
+                }
+            }
+
+            for (int k = 0; k < n; k++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    if (dist[i, k] >= INF) continue;
+                    for (int j = 0; j < n; j++)
                     {
-                        Console.Write("Ruta de {0} a {1} (dist: {2}): ", mapaLetras[i], mapaLetras[j], dist[i, j]);
-                        MostrarRutaFloyd(next, i, j);
+                        if (dist[k, j] >= INF) continue;
+
+                        int nuevaDist = dist[i, k] + dist[k, j];
+                        if (nuevaDist < dist[i, j])
+                        {
+                            dist[i, j] = nuevaDist;
+                            next[i, j] = next[i, k];
+                        }
                     }
                 }
             }
         }
 
-        private void MostrarRutaFloyd(int[,] next, int u, int v)
+        public List<int> ReconstruirCaminoFloyd(int origen, int destino, int[,] next)
         {
-            if (next[u, v] == -1)
-            {
-                Console.WriteLine(" No hay ruta.");
-                return;
-            }
+            if (next[origen, destino] == -1)
+                return null;
 
-            Console.Write("{0}", mapaLetras[u]);
-            while (u != v)
+            List<int> camino = new List<int> { origen };
+            while (origen != destino)
             {
-                u = next[u, v];
-                Console.Write(" -> {0}", mapaLetras[u]);
+                origen = next[origen, destino];
+                if (origen == -1) return null;
+                camino.Add(origen);
             }
-            Console.WriteLine();
+            return camino;
         }
 
-        public void Warshall()
+        public bool[,] Warshall()
         {
+            int nodos = Lugares.Length;
             bool[,] alcance = new bool[nodos, nodos];
+
             for (int i = 0; i < nodos; i++)
+            {
                 for (int j = 0; j < nodos; j++)
-                    alcance[i, j] = matriz[i, j] > 0;
+                    alcance[i, j] = (matriz[i, j] < INF);
+                alcance[i, i] = true;
+            }
 
             for (int k = 0; k < nodos; k++)
-                for (int i = 0; i < nodos; i++)
-                    for (int j = 0; j < nodos; j++)
-                        alcance[i, j] = alcance[i, j] || (alcance[i, k] && alcance[k, j]);
-
-            Console.WriteLine("\n[Warshall] Matriz de Alcance (1 = hay camino):");
-            for (int i = 0; i < nodos; i++)
             {
-                for (int j = 0; j < nodos; j++)
+                for (int i = 0; i < nodos; i++)
                 {
-                    Console.Write((alcance[i, j] ? "1" : "0") + " ");
+                    if (!alcance[i, k]) continue;
+                    for (int j = 0; j < nodos; j++)
+                    {
+                        if (alcance[i, j]) continue;
+                        if (alcance[i, k] && alcance[k, j])
+                            alcance[i, j] = true;
+                    }
                 }
-                Console.WriteLine();
             }
+
+            return alcance;
         }
+
+        #endregion
+
     }
 }
