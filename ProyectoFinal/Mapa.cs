@@ -19,7 +19,7 @@ namespace ProyectoFinal
         private void cargaInicial()
         {
             #region Imagenes
-            pbMapa.Image = Image.FromFile(@"img\MapaCiudadGrafo.png");
+            pbMapa.Image = Image.FromFile(@"img\MapaCiudadGrafov2.png");
             pbMapa.SizeMode = PictureBoxSizeMode.StretchImage;
             #endregion
 
