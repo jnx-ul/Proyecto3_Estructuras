@@ -153,8 +153,8 @@
             // lblRutasPosibles
             // 
             lblRutasPosibles.AutoSize = true;
-            lblRutasPosibles.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblRutasPosibles.Location = new Point(20, 373);
+            lblRutasPosibles.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblRutasPosibles.Location = new Point(20, 384);
             lblRutasPosibles.Name = "lblRutasPosibles";
             lblRutasPosibles.Size = new Size(0, 17);
             lblRutasPosibles.TabIndex = 12;
@@ -163,7 +163,7 @@
             // 
             lblDirecciones.AutoSize = true;
             lblDirecciones.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblDirecciones.Location = new Point(20, 390);
+            lblDirecciones.Location = new Point(20, 411);
             lblDirecciones.Name = "lblDirecciones";
             lblDirecciones.Size = new Size(0, 17);
             lblDirecciones.TabIndex = 13;
@@ -172,7 +172,7 @@
             // 
             lblTiempo.AutoSize = true;
             lblTiempo.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTiempo.Location = new Point(20, 356);
+            lblTiempo.Location = new Point(20, 367);
             lblTiempo.Name = "lblTiempo";
             lblTiempo.Size = new Size(0, 17);
             lblTiempo.TabIndex = 14;

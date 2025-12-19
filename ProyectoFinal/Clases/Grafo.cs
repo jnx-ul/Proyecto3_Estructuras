@@ -2,7 +2,7 @@
 {
     public class Grafo
     {
-        public const int INF = int.MaxValue / 4; //Constante utilizada para inicializar el grafo 
+        public const int INF = int.MaxValue / 4; //Constante utilizada para inicializar el grafo, representa un valor "infinito"
         public string[] Lugares;
         public Dictionary<string, int> mapaIndices;
         public Dictionary<int, string> mapaNombres;
@@ -54,7 +54,7 @@
             mapaIndices = new Dictionary<string, int>();
             mapaNombres = new Dictionary<int, string>();
 
-            //Recorre el arreglo de lugares y llena los diccionarios.
+            //Recorre el arreglo de lugares y llena los diccionarios
             for (int i = 0; i < Lugares.Length; i++)
             {
                 mapaIndices[Lugares[i]] = i;
@@ -67,14 +67,16 @@
         /// </summary>
         private void InicializarMatriz()
         {
-            int tamanio = Lugares.Length;
-            matriz = new int[tamanio, tamanio];
+            int tamanio = Lugares.Length; //tamaño del array
+            matriz = new int[tamanio, tamanio]; //inicializa matriz según el tamaño de la lista
 
             for (int i = 0; i < tamanio; i++)
             {
                 for (int j = 0; j < tamanio; j++)
                 {
-                    matriz[i, j] = (i == j) ? 0 : INF;
+                    //asigna valor a la matriz
+                    matriz[i, j] = (i == j) ? 0 //mismo nodo
+                                        : INF; //valor "infinito"
                 }
             }
         }
@@ -90,11 +92,11 @@
             int i = mapaIndices[origen];
             int j = mapaIndices[destino];
             matriz[i, j] = peso;
-            matriz[j, i] = peso; // grafo no dirigido
+            matriz[j, i] = peso; 
         }
 
         /// <summary>
-        /// Define las calles entre los lugares (puedes ajustar según tu mapa real).
+        /// Agrega cada conexión en el mapa y le asigna el costo entre cada una de ellas
         /// </summary>
         private void InicializarCalles()
         {
@@ -299,6 +301,10 @@
             return camino;
         }
 
+        /// <summary>
+        /// Verifica si existe al menos una ruta
+        /// </summary>
+        /// <returns></returns>
         public bool[,] Warshall()
         {
             int nodos = Lugares.Length;

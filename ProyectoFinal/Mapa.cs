@@ -84,7 +84,11 @@ namespace ProyectoFinal
             lblDistancia.Text = "Distancia mínima: " + resultado.distancia + "km";
             lblTiempo.Text = "Tiempo estimado de llegada " + (resultado.distancia * 1.5) + " minutos";
             lblRutasPosibles.Text = "Ruta más corta: ";
-            lblDirecciones.Text = string.Join("  ->  " + Environment.NewLine, nombresRuta);
+
+            if (origenNombre == destinoNombre)
+                lblDirecciones.Text = "Estás en el mismo punto.";
+            else
+                lblDirecciones.Text = string.Join(" →" + Environment.NewLine, nombresRuta);
         }
 
         private void btnTodasRutasCortas_Click(object sender, EventArgs e)
@@ -108,7 +112,12 @@ namespace ProyectoFinal
 
             lblNomAlgoritmo.Text = "Algoritmo de Floyd (todas las rutas más cortas)";
 
-            if (camino == null)
+            if (origenNombre == destinoNombre)
+            {
+                lblDirecciones.Text = "Estás en el mismo punto.";
+                return;
+            }
+            else if (camino == null)
             {
                 lblDirecciones.Text = $"No existe ruta entre \"{origenNombre}\" y \"{destinoNombre}\".";
                 return;
@@ -120,7 +129,8 @@ namespace ProyectoFinal
             lblDistancia.Text = "Distancia mínima: " + distancia + "km";
             lblTiempo.Text = "Tiempo estimado de llegada " + (distancia * 1.5) + " minutos";
             lblRutasPosibles.Text = "Ruta más corta: ";
-            lblDirecciones.Text = string.Join("  ->  " + Environment.NewLine, nombresRuta);
+
+            lblDirecciones.Text = string.Join(" →" + Environment.NewLine, nombresRuta);
         }
 
         private void btnExisteCamino_Click(object sender, EventArgs e)
@@ -145,10 +155,12 @@ namespace ProyectoFinal
             lblNomAlgoritmo.Text = "Algoritmo de Warshall (conectividad)";
             lblTiempo.Text = "¿Existe algún camino entre:";
             lblRutasPosibles.Text = $"\"{origenNombre}\" y \"{destinoNombre}\"?";
-            lblDirecciones.Text = (existeCamino ? "Resultado: SÍ existe camino."
-                                              : "Resultado: NO existe camino.");
+
+            if (origenNombre == destinoNombre)
+                lblDirecciones.Text = "Estás en el mismo punto.";
+            else
+                lblDirecciones.Text = (existeCamino ? "SÍ existe camino." : "NO existe camino.");
         }
         #endregion
-
     }
 }
